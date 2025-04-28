@@ -1,5 +1,6 @@
 import express from "express";
-import mongoose from 'mongoose';
+import cors from "cors";
+import mongoose from "mongoose";
 import path from "path";
 import { fileURLToPath } from "url";
 import scholarshipRoutes from "./routes/scholarshipRoutes.js";
@@ -8,13 +9,16 @@ import errorHandler from "./middleware/error.js";
 import notFound from "./middleware/notFound.js";
 
 const port = process.env.PORT || 8000;
-const MONGO_URI = process.env.MONGO_URI
+const MONGO_URI = process.env.MONGO_URI;
 
 // Get the directory name
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
+
+// Enable CORS for all origins
+app.use(cors());
 
 // Connect to MongoDB
 const connectDB = async () => {
