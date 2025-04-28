@@ -41,12 +41,10 @@ export const getScholarship = async (req, res, next) => {
 // @route   POST /api/scholarships
 export const createScholarship = async (req, res, next) => {
   try {
-    const newScholarship = new Scholarship({
-      ...req.body,
-      createdByAdminId: req.user.id,
-    });
+    const newScholarship = new Scholarship(req.body);
 
     const savedScholarship = await newScholarship.save();
+
     res.status(201).json({ success: true, data: savedScholarship });
   } catch (error) {
     next(error);
@@ -74,6 +72,7 @@ export const updateScholarship = async (req, res, next) => {
     next(error);
   }
 };
+
 
 // @desc    Delete scholarship
 // @route   DELETE /api/scholarships/:id
