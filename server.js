@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import path from "path";
 import { fileURLToPath } from "url";
 import scholarshipRoutes from "./routes/scholarshipRoutes.js";
+import applicationRoutes from "./routes/applicationRoutes.js";
 import logger from "./middleware/logger.js";
 import errorHandler from "./middleware/error.js";
 import notFound from "./middleware/notFound.js";
@@ -24,9 +25,9 @@ app.use(cors());
 const connectDB = async () => {
   try {
     await mongoose.connect(MONGO_URI);
-    console.log('MongoDB connected');
+    console.log("MongoDB connected");
   } catch (error) {
-    console.error('Error connecting to MongoDB:', error.message);
+    console.error("Error connecting to MongoDB:", error.message);
     process.exit(1);
   }
 };
@@ -45,6 +46,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // Routes
 app.use("/api/scholarships", scholarshipRoutes);
+app.use("/api/applications", applicationRoutes);
 
 // Error handler
 app.use(notFound);
