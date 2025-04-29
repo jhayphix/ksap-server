@@ -3,10 +3,13 @@ import cors from "cors";
 import mongoose from "mongoose";
 import path from "path";
 import { fileURLToPath } from "url";
+
 import scholarshipRoutes from "./routes/scholarshipRoutes.js";
 import applicationRoutes from "./routes/applicationRoutes.js";
 import externalScholarshipRoutes from "./routes/externalScholarshipRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
+import applicantRoutes from "./routes/adminRoutes.js";
+
 import logger from "./middleware/logger.js";
 import errorHandler from "./middleware/error.js";
 import notFound from "./middleware/notFound.js";
@@ -51,6 +54,7 @@ app.use("/api/scholarships", scholarshipRoutes);
 app.use("/api/applications", applicationRoutes);
 app.use("/api/external-scholarships", externalScholarshipRoutes);
 app.use("/api/admins", adminRoutes);
+app.use("/api/applicants", applicantRoutes);
 
 // Error handler
 app.use(notFound);
