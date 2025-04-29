@@ -48,6 +48,7 @@ export const createAdmin = async (req, res, next) => {
   } catch (error) {
     // Handle Zod validation errors
     if (error.name === "ZodError") {
+      console.error("Zod validation errors:", error.errors);
       return res.status(400).json({ success: false, errors: error.errors });
     }
     next(error);
