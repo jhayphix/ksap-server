@@ -1,14 +1,14 @@
 import { z } from "zod";
 
 export const adminSchema = z.object({
-  accountStatus: z.string().default("Active"),
+  accountStatus: z.string().optional().default("Active"),
   assignedRole: z.string(),
-  authDisplayName: z.string().optional(),
-  authEmail: z.string().email().optional(),
+  authDisplayName: z.string().nullable().optional(),
+  authEmail: z.string().email().nullable().optional(),
   authPhoneNumber: z.string().nullable().optional(),
-  authPhotoURL: z.string().url().optional(),
-  createdAt: z.coerce.date().optional(),
-  createdByAdminId: z.string().optional(),
+  authPhotoURL: z.string().url().nullable().optional(),
+  createdAt: z.coerce.date().nullable().optional(),
+  createdByAdminId: z.string().nullable().optional(),
   dateOfBirth: z.coerce.date(),
   deactivatedAt: z.coerce.date().nullable().optional(),
   deactivatedByAdminId: z.string().nullable().optional(),
@@ -17,16 +17,19 @@ export const adminSchema = z.object({
   firstName: z.string(),
   fullName: z.string().optional(),
   gender: z.string(),
-  isApprovalManager: z.boolean().default(false),
-  isReviewManager: z.boolean().default(false),
-  isSuperAdmin: z.boolean().default(false),
+  isApprovalManager: z.boolean().optional().default(false),
+  isReviewManager: z.boolean().optional().default(false),
+  isSuperAdmin: z.boolean().optional().default(false),
   lastName: z.string(),
   location: z.string(),
   nationality: z.string(),
-  otherNames: z.string().optional(),
+  otherNames: z.string().nullable().optional(),
   phoneNumber: z.string(),
-  role: z.string().default("Admin"),
-  uid: z.string().optional(),
-  updatedAt: z.coerce.date().optional(),
-  updatedByAdminId: z.string().optional(),
+  role: z.string().optional().default("Admin"),
+  uid: z.string().nullable().optional(),
+  updatedAt: z.coerce.date().nullable().optional(),
+  updatedByAdminId: z.string().nullable().optional(),
 });
+
+// Partial schema for updating an admin
+export const adminUpdateSchema = adminSchema.partial();
