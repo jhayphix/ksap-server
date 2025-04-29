@@ -58,6 +58,10 @@ app.use("/api/applications", applicationRoutes);
 app.use("/api/external-scholarships", externalScholarshipRoutes);
 app.use("/api/admins", adminRoutes);
 app.use("/api/applicants", applicantRoutes);
+app.get("/health", (req, res) => {
+  res.status(200).send("OK");
+});
+
 
 // Error handler
 app.use(notFound);
