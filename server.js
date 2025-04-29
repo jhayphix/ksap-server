@@ -14,7 +14,7 @@ import logger from "./middleware/logger.js";
 import errorHandler from "./middleware/error.js";
 import notFound from "./middleware/notFound.js";
 
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
 
 // Get the directory name
