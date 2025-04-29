@@ -5,7 +5,9 @@ const responseSchema = new mongoose.Schema({
   id: { type: String },
   order: { type: Number },
   label: { type: String },
-  response: { type: String },
+  response: {
+    type: mongoose.Schema.Types.Mixed,
+  },
   questionId: { type: String },
   type: { type: String },
 });

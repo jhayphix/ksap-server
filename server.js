@@ -8,7 +8,7 @@ import scholarshipRoutes from "./routes/scholarshipRoutes.js";
 import applicationRoutes from "./routes/applicationRoutes.js";
 import externalScholarshipRoutes from "./routes/externalScholarshipRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
-import applicantRoutes from "./routes/adminRoutes.js";
+import applicantRoutes from "./routes/applicantRoutes.js";
 
 import logger from "./middleware/logger.js";
 import errorHandler from "./middleware/error.js";
