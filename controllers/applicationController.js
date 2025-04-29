@@ -44,14 +44,15 @@ export const createApplication = async (req, res, next) => {
   try {
     const validatedData = applicationSchema.parse(req.body);
 
-    const newApplication = new Application(validatedData);
+    const newApplication = new Application(req.body);
     const savedApplication = await newApplication.save();
-
     res.status(201).json({ success: true, data: savedApplication });
   } catch (error) {
     if (error.name === "ZodError") {
+      console.error("Zod validation errors:", error.errors);
       return res.status(400).json({ success: false, errors: error.errors });
     }
+    console.log("Error: ", error);
     next(error);
   }
 };

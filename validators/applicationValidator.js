@@ -16,7 +16,7 @@ const progressSchema = z.object({
   completedSections: z.array(z.string()),
   lastCompletedSectionIndex: z.number(),
   percentage: z.number(),
-  lastCompletedSection: z.string(),
+  lastCompletedSection: z.string().nullable(),
 });
 
 // Response Section Schema
@@ -27,16 +27,16 @@ const responseSectionSchema = z.object({
   responses: z.array(responseSchema),
 });
 
-// Main Application Schema
+// Application Schema
 export const applicationSchema = z.object({
-  approvalComment: z.string().optional().default(""),
-  approvalStatus: z.string().optional().default("Awaiting Approval"),
+  approvalComment: z.string().nullable().optional().default(""),
+  approvalStatus: z.string().nullable().optional().default("Awaiting Approval"),
   approvedAt: z.coerce.date().nullable().optional(),
   approvedByAdminId: z.string().nullable().optional(),
-  applicationScore: z.string().optional().default(""),
+  applicationScore: z.string().nullable().optional().default(""),
   applicationStatus: z.string().optional().default("Pending"),
   applicantId: z.string(),
-  appliedAt: z.coerce.date().optional(),
+  appliedAt: z.coerce.date().nullable().optional(),
   isApproved: z.boolean().optional().default(false),
   isDisapproved: z.boolean().optional().default(false),
   isDisqualified: z.boolean().optional().default(false),
@@ -48,11 +48,11 @@ export const applicationSchema = z.object({
   progress: progressSchema.optional(),
   reviewComment: z.string().nullable().optional(),
   reviewStatus: z.string().optional().default("Pending"),
-  reviewedAcademicScore: z.string().optional().default(""),
-  reviewedAt: z.coerce.date().optional(),
-  reviewedByAdminId: z.string().optional(),
+  reviewedAcademicScore: z.string().nullable().optional().default(""),
+  reviewedAt: z.coerce.date().nullable().optional(),
+  reviewedByAdminId: z.string().nullable().optional(),
   responseSections: z.array(responseSectionSchema),
   scholarshipId: z.string(),
-  updatedAt: z.coerce.date().optional(),
+  updatedAt: z.coerce.date().nullable().optional(),
   externalId: z.string(),
 });

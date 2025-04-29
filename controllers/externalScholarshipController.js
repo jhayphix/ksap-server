@@ -49,7 +49,6 @@ export const createExternalScholarship = async (req, res, next) => {
 
     res.status(201).json({ success: true, data: savedScholarship });
   } catch (error) {
-    console.log("error: ", error);
     if (error.name === "ZodError") {
       return res.status(400).json({ success: false, errors: error.errors });
     }
