@@ -17,7 +17,7 @@ import notFound from "./middleware/notFound.js";
 
 dotenv.config();
 
-const port = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5000;
 const MONGODB_URI = process.env.MONGODB_URI;
 
 // Get the directory name
@@ -63,4 +63,4 @@ app.use("/api/applicants", applicantRoutes);
 app.use(notFound);
 app.use(errorHandler);
 
-app.listen(port, () => console.log(`Server is running on port ${port}`));
+app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
