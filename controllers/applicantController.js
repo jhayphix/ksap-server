@@ -49,6 +49,7 @@ export const createApplicant = async (req, res, next) => {
     res.status(201).json({ success: true, data: savedApplicant });
   } catch (error) {
     if (error.name === "ZodError") {
+      console.error("Zod validation errors:", error.errors);
       return res.status(400).json({ success: false, errors: error.errors });
     }
     next(error);

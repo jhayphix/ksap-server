@@ -1,43 +1,43 @@
 import mongoose from "mongoose";
 
 const guardianDetailsSchema = new mongoose.Schema({
-  guardianName: { type: String },
-  guardianPhone: { type: String },
-  guardianLocation: { type: String },
-  guardianOccupation: { type: String },
-  guardianRelationship: { type: String },
+  guardianName: { type: String, default: "" },
+  guardianPhone: { type: String, default: "" },
+  guardianLocation: { type: String, default: "" },
+  guardianOccupation: { type: String, default: "" },
+  guardianRelationship: { type: String, default: "" },
 });
 
 const applicantSchema = new mongoose.Schema({
-  uid: { type: String },
+  uid: { type: String, default: "" },
   externalId: { type: String, required: true },
-  role: { type: String, default: "Applicant" },
+  role: { type: String, enum: ["Applicant"], default: "Applicant" },
   fullName: { type: String, required: true },
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
-  otherNames: { type: String },
+  otherNames: { type: String, default: "" },
   gender: { type: String, required: true },
-  nationality: { type: String },
+  nationality: { type: String, default: "" },
   dateOfBirth: { type: Date, required: true },
   age: { type: String, required: true },
   phoneNumber: { type: String, required: true },
-  telecelNumber: { type: String },
+  telecelNumber: { type: String, default: "" },
   email: { type: String, required: true },
-  authEmail: { type: String },
-  authPhoneNumber: { type: String },
-  authPhotoURL: { type: String },
-  authDisplayName: { type: String },
+  authEmail: { type: String, default: "" },
+  authPhoneNumber: { type: String, default: "" },
+  authPhotoURL: { type: String, default: "" },
+  authDisplayName: { type: String, default: "" },
   indexNumber: { type: String, required: true },
   referenceNumber: { type: String, required: true },
-  college: { type: String },
-  faculty: { type: String },
-  department: { type: String },
+  college: { type: String, default: "" },
+  faculty: { type: String, default: "" },
+  department: { type: String, default: "" },
   programmeOfStudy: { type: String, required: true },
   durationOfProgramme: { type: String, required: true },
   yearOfStudy: { type: String, required: true },
   educationalLevel: { type: String, required: true },
   modeOfAdmission: { type: String, required: true },
-  guardianDetails: guardianDetailsSchema,
+  guardianDetails: { type: guardianDetailsSchema, default: () => ({}) },
   accountStatus: {
     type: String,
     enum: ["Active", "Deactivated"],
@@ -50,5 +50,4 @@ const applicantSchema = new mongoose.Schema({
 });
 
 const Applicant = mongoose.model("Applicant", applicantSchema);
-
 export default Applicant;
