@@ -1,4 +1,5 @@
 import Applicant from "../models/applicantModel.js";
+import { applicantSchema } from "../validators/applicantValidator.js";
 
 // @desc    Get all applicants
 // @route   GET /api/applicants
@@ -41,12 +42,15 @@ export const getApplicant = async (req, res, next) => {
 // @route   POST /api/applicants
 export const createApplicant = async (req, res, next) => {
   try {
-    const newApplicant = new Applicant(req.body);
-
+    const validatedData = applicantSchema.parse(req.body);
+    const newApplicant = new Applicant(validatedData);
     const savedApplicant = await newApplicant.save();
 
     res.status(201).json({ success: true, data: savedApplicant });
   } catch (error) {
+    if (error.name === "ZodError") {
+      return res.status(400).json({ success: false, errors: error.errors });
+    }
     next(error);
   }
 };
@@ -55,9 +59,11 @@ export const createApplicant = async (req, res, next) => {
 // @route   PUT /api/applicants/:id
 export const updateApplicant = async (req, res, next) => {
   try {
+    const validatedData = applicantSchema.parse(req.body);
+
     const applicant = await Applicant.findByIdAndUpdate(
       req.params.id,
-      { ...req.body, updatedAt: Date.now() },
+      { ...validatedData, updatedAt: Date.now() },
       { new: true, runValidators: true }
     );
 
@@ -69,6 +75,9 @@ export const updateApplicant = async (req, res, next) => {
 
     res.status(200).json({ success: true, data: applicant });
   } catch (error) {
+    if (error.name === "ZodError") {
+      return res.status(400).json({ success: false, errors: error.errors });
+    }
     next(error);
   }
 };

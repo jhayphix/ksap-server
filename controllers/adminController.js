@@ -1,4 +1,5 @@
 import Admin from "../models/adminModel.js";
+import { adminSchema } from "../validators/adminValidator.js";
 
 // @desc    Get all admins
 // @route   GET /api/admins
@@ -39,11 +40,16 @@ export const getAdmin = async (req, res, next) => {
 // @route   POST /api/admins
 export const createAdmin = async (req, res, next) => {
   try {
-    const newAdmin = new Admin(req.body);
+    const validatedData = adminSchema.parse(req.body);
+    const newAdmin = new Admin(validatedData);
     const savedAdmin = await newAdmin.save();
 
     res.status(201).json({ success: true, data: savedAdmin });
   } catch (error) {
+    // Handle Zod validation errors
+    if (error.name === "ZodError") {
+      return res.status(400).json({ success: false, errors: error.errors });
+    }
     next(error);
   }
 };
@@ -52,9 +58,11 @@ export const createAdmin = async (req, res, next) => {
 // @route   PUT /api/admins/:id
 export const updateAdmin = async (req, res, next) => {
   try {
+    const validatedData = adminSchema.parse(req.body);
+
     const admin = await Admin.findByIdAndUpdate(
       req.params.id,
-      { ...req.body, updatedAt: Date.now() },
+      { ...validatedData, updatedAt: Date.now() },
       { new: true, runValidators: true }
     );
 
@@ -66,6 +74,9 @@ export const updateAdmin = async (req, res, next) => {
 
     res.status(200).json({ success: true, data: admin });
   } catch (error) {
+    if (error.name === "ZodError") {
+      return res.status(400).json({ success: false, errors: error.errors });
+    }
     next(error);
   }
 };

@@ -1,4 +1,5 @@
 import Application from "../models/applicationModel.js";
+import { applicationSchema } from "../validators/applicationValidator.js";
 
 // @desc   Get all applications
 // @route  GET /api/applications
@@ -41,12 +42,16 @@ export const getApplication = async (req, res, next) => {
 // @route   POST /api/applications
 export const createApplication = async (req, res, next) => {
   try {
-    const newApplication = new Application(req.body);
+    const validatedData = applicationSchema.parse(req.body);
 
+    const newApplication = new Application(validatedData);
     const savedApplication = await newApplication.save();
 
     res.status(201).json({ success: true, data: savedApplication });
   } catch (error) {
+    if (error.name === "ZodError") {
+      return res.status(400).json({ success: false, errors: error.errors });
+    }
     next(error);
   }
 };
@@ -55,9 +60,11 @@ export const createApplication = async (req, res, next) => {
 // @route   PUT /api/applications/:id
 export const updateApplication = async (req, res, next) => {
   try {
+    const validatedData = applicationSchema.parse(req.body);
+
     const application = await Application.findByIdAndUpdate(
       req.params.id,
-      { ...req.body, updatedAt: Date.now() },
+      { ...validatedData, updatedAt: Date.now() },
       { new: true, runValidators: true }
     );
 
@@ -69,6 +76,9 @@ export const updateApplication = async (req, res, next) => {
 
     res.status(200).json({ success: true, data: application });
   } catch (error) {
+    if (error.name === "ZodError") {
+      return res.status(400).json({ success: false, errors: error.errors });
+    }
     next(error);
   }
 };

@@ -47,8 +47,6 @@ export const createScholarship = async (req, res, next) => {
     const savedScholarship = await newScholarship.save();
     res.status(201).json({ success: true, data: savedScholarship });
   } catch (error) {
-    console.log("Error message: ", error.message);
-    console.log("Error: ", error);
     next(error);
   }
 };

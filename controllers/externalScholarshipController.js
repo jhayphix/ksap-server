@@ -1,4 +1,5 @@
 import ExternalScholarship from "../models/externalScholarshipModel.js";
+import { externalScholarshipSchema } from "../validators/externalScholarshipValidator.js";
 
 // @desc   Get all external scholarships
 // @route  GET /api/external-scholarships
@@ -41,12 +42,17 @@ export const getExternalScholarship = async (req, res, next) => {
 // @route  POST /api/external-scholarships
 export const createExternalScholarship = async (req, res, next) => {
   try {
-    const newScholarship = new ExternalScholarship(req.body);
+    const validatedData = externalScholarshipSchema.parse(req.body);
 
+    const newScholarship = new ExternalScholarship(validatedData);
     const savedScholarship = await newScholarship.save();
 
     res.status(201).json({ success: true, data: savedScholarship });
   } catch (error) {
+    console.log("error: ", error);
+    if (error.name === "ZodError") {
+      return res.status(400).json({ success: false, errors: error.errors });
+    }
     next(error);
   }
 };
@@ -55,9 +61,11 @@ export const createExternalScholarship = async (req, res, next) => {
 // @route  PUT /api/external-scholarships/:id
 export const updateExternalScholarship = async (req, res, next) => {
   try {
+    const validatedData = externalScholarshipSchema.parse(req.body);
+
     const scholarship = await ExternalScholarship.findByIdAndUpdate(
       req.params.id,
-      { ...req.body, updatedAt: Date.now() },
+      { ...validatedData, updatedAt: Date.now() },
       { new: true, runValidators: true }
     );
 
@@ -69,9 +77,13 @@ export const updateExternalScholarship = async (req, res, next) => {
 
     res.status(200).json({ success: true, data: scholarship });
   } catch (error) {
+    if (error.name === "ZodError") {
+      return res.status(400).json({ success: false, errors: error.errors });
+    }
     next(error);
   }
 };
+
 
 // @desc   Delete external scholarship
 // @route  DELETE /api/external-scholarships/:id
