@@ -1,3 +1,4 @@
+import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
@@ -14,8 +15,10 @@ import logger from "./middleware/logger.js";
 import errorHandler from "./middleware/error.js";
 import notFound from "./middleware/notFound.js";
 
+dotenv.config();
+
 const port = process.env.PORT || 5000;
-const MONGO_URI = process.env.MONGO_URI;
+const MONGODB_URI = process.env.MONGODB_URI;
 
 // Get the directory name
 const __filename = fileURLToPath(import.meta.url);
@@ -29,7 +32,7 @@ app.use(cors());
 // Connect to MongoDB
 const connectDB = async () => {
   try {
-    await mongoose.connect(MONGO_URI);
+    await mongoose.connect(MONGODB_URI);
     console.log("MongoDB connected");
   } catch (error) {
     console.error("Error connecting to MongoDB:", error.message);
