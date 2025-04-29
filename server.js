@@ -6,6 +6,7 @@ import { fileURLToPath } from "url";
 import scholarshipRoutes from "./routes/scholarshipRoutes.js";
 import applicationRoutes from "./routes/applicationRoutes.js";
 import externalScholarshipRoutes from "./routes/externalScholarshipRoutes.js";
+import adminRoutes from "./routes/adminRoutes.js";
 import logger from "./middleware/logger.js";
 import errorHandler from "./middleware/error.js";
 import notFound from "./middleware/notFound.js";
@@ -49,6 +50,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/api/scholarships", scholarshipRoutes);
 app.use("/api/applications", applicationRoutes);
 app.use("/api/external-scholarships", externalScholarshipRoutes);
+app.use("/api/admins", adminRoutes);
 
 // Error handler
 app.use(notFound);
