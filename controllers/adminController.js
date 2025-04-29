@@ -1,8 +1,5 @@
 import Admin from "../models/adminModel.js";
-import {
-  adminSchema,
-  adminUpdateSchema,
-} from "../validators/adminValidator.js";
+import { adminSchema } from "../validators/adminValidator.js";
 
 // @desc    Get all admins
 // @route   GET /api/admins
@@ -61,7 +58,7 @@ export const createAdmin = async (req, res, next) => {
 // @route   PUT /api/admins/:id
 export const updateAdmin = async (req, res, next) => {
   try {
-    const validatedData = adminUpdateSchema.parse(req.body);
+    const validatedData = adminSchema.parse(req.body);
 
     const admin = await Admin.findByIdAndUpdate(
       req.params.id,

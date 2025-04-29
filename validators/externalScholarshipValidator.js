@@ -12,6 +12,3 @@ export const externalScholarshipSchema = z.object({
   updatedByAdminId: z.string(),
   url: z.string().url(),
 });
-
-export const externalScholarshipUpdateSchema =
-  externalScholarshipSchema.partial();

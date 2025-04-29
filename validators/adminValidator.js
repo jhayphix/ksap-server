@@ -30,6 +30,3 @@ export const adminSchema = z.object({
   updatedAt: z.coerce.date().nullable().optional(),
   updatedByAdminId: z.string().nullable().optional(),
 });
-
-// Partial schema for updating an admin
-export const adminUpdateSchema = adminSchema.partial();

@@ -41,6 +41,3 @@ export const scholarshipSchema = z.object({
   shortName: z.string(),
   updatedByAdminId: z.string(),
 });
-
-
-export const scholarshipUpdateSchema = scholarshipSchema.partial();
