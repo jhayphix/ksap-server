@@ -1,5 +1,8 @@
 import Application from "../models/applicationModel.js";
-import { applicationSchema } from "../validators/applicationValidator.js";
+import {
+  applicationSchema,
+  applicationUpdateSchema,
+} from "../validators/applicationValidator.js";
 
 // @desc   Get all applications
 // @route  GET /api/applications
@@ -61,7 +64,7 @@ export const createApplication = async (req, res, next) => {
 // @route   PUT /api/applications/:id
 export const updateApplication = async (req, res, next) => {
   try {
-    const validatedData = applicationSchema.parse(req.body);
+    const validatedData = applicationUpdateSchema.parse(req.body);
 
     const application = await Application.findByIdAndUpdate(
       req.params.id,

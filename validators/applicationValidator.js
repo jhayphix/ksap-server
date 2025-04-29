@@ -56,3 +56,5 @@ export const applicationSchema = z.object({
   updatedAt: z.coerce.date().nullable().optional(),
   externalId: z.string(),
 });
+
+export const applicationUpdateSchema = applicationSchema.partial();

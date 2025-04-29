@@ -1,5 +1,8 @@
 import ExternalScholarship from "../models/externalScholarshipModel.js";
-import { externalScholarshipSchema } from "../validators/externalScholarshipValidator.js";
+import {
+  externalScholarshipSchema,
+  externalScholarshipUpdateSchema,
+} from "../validators/externalScholarshipValidator.js";
 
 // @desc   Get all external scholarships
 // @route  GET /api/external-scholarships
@@ -60,7 +63,7 @@ export const createExternalScholarship = async (req, res, next) => {
 // @route  PUT /api/external-scholarships/:id
 export const updateExternalScholarship = async (req, res, next) => {
   try {
-    const validatedData = externalScholarshipSchema.parse(req.body);
+    const validatedData = externalScholarshipUpdateSchema.parse(req.body);
 
     const scholarship = await ExternalScholarship.findByIdAndUpdate(
       req.params.id,

@@ -1,5 +1,8 @@
 import Scholarship from "../models/scholarshipModel.js";
-import { scholarshipSchema } from "../validators/scholarshipValidator.js";
+import {
+  scholarshipSchema,
+  scholarshipUpdateSchema,
+} from "../validators/scholarshipValidator.js";
 
 // @desc   Get all scholarships
 // @route  GET /api/scholarships
@@ -55,7 +58,7 @@ export const createScholarship = async (req, res, next) => {
 // @route   PUT /api/scholarships/:id
 export const updateScholarship = async (req, res, next) => {
   try {
-    const validatedData = scholarshipSchema.parse(req.body);
+    const validatedData = scholarshipUpdateSchema.parse(req.body);
     validatedData.updatedAt = Date.now();
     const scholarship = await Scholarship.findByIdAndUpdate(
       req.params.id,

@@ -1,5 +1,8 @@
 import Applicant from "../models/applicantModel.js";
-import { applicantSchema } from "../validators/applicantValidator.js";
+import {
+  applicantSchema,
+  applicantUpdateSchema,
+} from "../validators/applicantValidator.js";
 
 // @desc    Get all applicants
 // @route   GET /api/applicants
@@ -59,7 +62,7 @@ export const createApplicant = async (req, res, next) => {
 // @route   PUT /api/applicants/:id
 export const updateApplicant = async (req, res, next) => {
   try {
-    const validatedData = applicantSchema.parse(req.body);
+    const validatedData = applicantUpdateSchema.parse(req.body);
 
     const applicant = await Applicant.findByIdAndUpdate(
       req.params.id,

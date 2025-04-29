@@ -46,3 +46,5 @@ export const applicantSchema = z.object({
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
 });
+
+export const applicantUpdateSchema = applicantSchema.partial();
