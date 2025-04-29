@@ -1,4 +1,5 @@
 import Scholarship from "../models/scholarshipModel.js";
+import { scholarshipSchema } from "../validators/scholarshipValidator.js";
 
 // @desc   Get all scholarships
 // @route  GET /api/scholarships
@@ -41,12 +42,13 @@ export const getScholarship = async (req, res, next) => {
 // @route   POST /api/scholarships
 export const createScholarship = async (req, res, next) => {
   try {
-    const newScholarship = new Scholarship(req.body);
-
+    const validatedData = scholarshipSchema.parse(req.body);
+    const newScholarship = new Scholarship(validatedData);
     const savedScholarship = await newScholarship.save();
-
     res.status(201).json({ success: true, data: savedScholarship });
   } catch (error) {
+    console.log("Error message: ", error.message);
+    console.log("Error: ", error);
     next(error);
   }
 };
@@ -55,9 +57,11 @@ export const createScholarship = async (req, res, next) => {
 // @route   PUT /api/scholarships/:id
 export const updateScholarship = async (req, res, next) => {
   try {
+    const validatedData = scholarshipSchema.parse(req.body);
+    validatedData.updatedAt = Date.now();
     const scholarship = await Scholarship.findByIdAndUpdate(
       req.params.id,
-      { ...req.body, updatedAt: Date.now() },
+      validatedData,
       { new: true, runValidators: true }
     );
 
@@ -72,6 +76,8 @@ export const updateScholarship = async (req, res, next) => {
     next(error);
   }
 };
+
+
 
 
 // @desc    Delete scholarship
