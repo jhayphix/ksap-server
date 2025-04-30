@@ -14,6 +14,11 @@ const sectionQuestionSchema = new mongoose.Schema({
     errorMessage: { type: String },
     comparismOperator: { type: String },
   },
+  fileUploadConfig: {
+    restrictFileTypes: { type: Boolean, default: false },
+    allowedFileTypes: { type: [String], default: [] },
+    maxFileSize: { type: String, default: "" },
+  },
   options: [
     {
       type: String,
