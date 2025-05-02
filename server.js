@@ -52,6 +52,9 @@ app.use(logger);
 // Setup static folder
 app.use(express.static(path.join(__dirname, "public")));
 
+// Serve static files
+app.use("/uploads", express.static(path.join(process.cwd(), "public", "uploads")));
+
 // Routes
 app.use("/api/scholarships", scholarshipRoutes);
 app.use("/api/applications", applicationRoutes);

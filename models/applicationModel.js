@@ -1,16 +1,16 @@
 import mongoose from "mongoose";
 
-// Define Sub-Schema for Responses
 const responseSchema = new mongoose.Schema({
   id: { type: String },
   order: { type: Number },
   label: { type: String },
-  response: {
-    type: mongoose.Schema.Types.Mixed,
-  },
   questionId: { type: String },
   type: { type: String },
+  response: {
+    type: mongoose.Schema.Types.Mixed, // Supports text, string arrays, file object, etc.
+  },
 });
+
 
 // Define Sub-Schema for Progress
 const progressSchema = new mongoose.Schema({

@@ -38,6 +38,34 @@ export const getApplication = async (req, res, next) => {
   }
 };
 
+// @desc    Upload a single file as part of a response
+// @route   POST /api/applications/upload
+export const uploadFileResponse = async (req, res, next) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ success: false, message: "No file uploaded" });
+    }
+
+    const fileUrl = `${req.protocol}://${req.get("host")}/uploads/scholarships/${req.body.scholarshipId}/${req.body.applicantId}/${req.body.id}/${req.body.sectionId}/${req.body.questionId}/${req.file.filename}`;
+
+    res.status(200).json({
+      success: true,
+      message: "File uploaded successfully",
+      file: {
+        filename: req.file.filename,
+        path: req.file.path,
+        url: fileUrl,
+        originalname: req.file.originalname,
+        mimetype: req.file.mimetype,
+        size: req.file.size,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+
 // @desc    Create new application
 // @route   POST /api/applications
 export const createApplication = async (req, res, next) => {

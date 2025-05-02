@@ -5,23 +5,21 @@ import {
   createApplication,
   updateApplication,
   deleteApplication,
+  uploadFileResponse,
 } from "../controllers/applicationController.js";
+
+import upload from "../middleware/fileUpload.js";
 
 const router = express.Router();
 
-// Get all applications
+// File upload route (important: must come before :id to avoid conflict)
+router.post("/upload", upload.single("file"), uploadFileResponse);
+
+// Other routes
 router.get("/", getApplications);
-
-// Get single application
 router.get("/:id", getApplication);
-
-// Create new application
 router.post("/", createApplication);
-
-// Update application
 router.put("/:id", updateApplication);
-
-// Delete application
 router.delete("/:id", deleteApplication);
 
 export default router;
